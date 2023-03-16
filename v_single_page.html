@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Welcome to My Blog</title>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
+    ></script>
+    <link rel="stylesheet" href="./assets/css/styles.css" />
+  </head>
+  <body>
+    <!-- Header/Navigation start -->
+    <nav
+      x-data="{isOpen: false, navItems:['Home','News','Galleries']}"
+      class="flex fixed top-0 items-center justify-between flex-wrap backdrop-blur-md bg-violet-500/30 shadow-lg py-2 px-3 lg:py-4 lg:px-8 w-full z-50"
+    >
+      <div class="flex items-center">
+        <h3
+          class="text-2xl font-medium text-transparent bg-clip-text bg-gradient-to-r from-violet-500 to-pink-500 cursor-pointer"
+        >
+          myBlog
+        </h3>
+      </div>
+
+      <!-- Left Header Section start -->
+      <div class="flex items-center justify-between">
+        <button @click="isOpen = !isOpen" class="lg:hidden text-white">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="w-6 h-6 text-dark lg:hidden"
+            fill="none"
+            viewbox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M4 6h16M4 12h16M4 18h16"
+            />
+          </svg>
+        </button>
+        <div class="hidden justify-center space-x-6 lg:inline-block">
+          <template x-for="(navItem, index) in navItems" :key="index">
+            <a
+              href="index.html"
+              x-text="navItem"
+              class="text-base font-medium text-white hover:text-violet-500"
+            ></a>
+          </template>
+          <a
+            href="login.html"
+            class="text-base font-medium text-white hover:text-violet-500"
+            >Login</a
+          >
+        </div>
+
+        <!-- Mobile Navbar start -->
+        <div class="mobile-navbar">
+          <div
+            class="fixed left-0 w-full h-60 p-5 bg-white rounded-lg shadow-xl top-12 z-50"
+            x-show="isOpen"
+            @click.away="isOpen = false"
+          >
+            <div class="flex flex-col space-y-6">
+              <template x-for="(navItem, index) in navItems" :key="index">
+                <a
+                  href="#"
+                  x-text="navItem"
+                  class="text-xl font-medium text-gray-900 hover:text-violet-500"
+                ></a>
+              </template>
+              <a
+                href="login.html"
+                class="text-xl font-medium text-gray-900 hover:text-violet-500"
+                >Login</a
+              >
+            </div>
+          </div>
+        </div>
+        <!-- Mobile Navbar end -->
+      </div>
+    </nav>
+    <!-- Header/Navigation end -->
+
+    <!-- Hero Section start -->
+    <section
+      class="flex justify-center w-full bg-[url('./assets/images/blogs/1.jpg')] bg-hero bg-no-repeat bg-cover bg-center pt-20 pb-40"
+    ></section>
+    <!-- Hero Section end -->
+
+    <!-- Content Section start -->
+    <section class="flex justify-center mt-10">
+      <div class="container flex flex-wrap h-full w-full">
+        <div class="flex flex-col w-auto lg:w-2/3">
+          <div class="bg-purple-200 p-5 m-5 rounded-xl">
+            <div class="flex mb-3">
+              <a href="#" class="flex text-sm text-gray-500 mr-3">
+                <i class="material-icons text-sm">person</i
+                ><span class="mr-1">Admin</span>
+              </a>
+              <a href="#" class="flex text-sm text-gray-500">
+                <i class="material-icons text-sm">schedule</i
+                ><span class="mr-1">20-09-2023</span>
+              </a>
+            </div>
+            <h3 class="text-2xl font-bold mb-5">Hey, This is My First Blog</h3>
+            <p class="mb-3">
+              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quasi ea
+              sint nobis beatae doloremque commodi necessitatibus ipsa earum
+              voluptate quaerat, sapiente quae fugit! Labore beatae quam
+              obcaecati tempora aperiam ea?
+            </p>
+            <p class="mb-3">
+              Doloribus nulla error, quidem alias itaque illum praesentium
+              dolores cumque, quisquam distinctio obcaecati quaerat assumenda
+              quod, consectetur perferendis. Molestias pariatur a nemo sit
+              doloremque, natus repellendus cupiditate ea tempore
+              exercitationem.
+            </p>
+            <p class="mb-3">
+              Inventore, laudantium? Magni aliquam distinctio in nesciunt
+              voluptates quod nulla dignissimos atque ea accusantium repellat,
+              molestias tempore excepturi dolor sit corrupti. Nemo neque
+              repellendus alias minus sunt iusto soluta illum.
+            </p>
+            <p class="mb-3">
+              Similique hic fugit unde quos consequatur vitae laborum, itaque
+              officiis assumenda voluptatem eveniet fuga. Error maiores a sint
+              magnam! Temporibus ducimus natus doloribus illo. Placeat ullam
+              obcaecati tenetur deserunt impedit?
+            </p>
+            <p class="mb-3">
+              Nisi eius fugit fuga incidunt repudiandae earum, consectetur,
+              nobis hic perspiciatis neque labore obcaecati. Rerum optio est
+              accusantium ab voluptatem, aut, neque doloremque sit perspiciatis
+              ipsa ex odio quasi. Dolorem!
+            </p>
+          </div>
+        </div>
+        <div class="flex flex-col w-full lg:w-1/3">
+          <div
+            x-data="{titles:['Hey, This is My First Blog','Belajar HTML dan CSS untuk Pemula','Mengenal Apa itu Javascript','Membuat Landing Page Sederhana','Membuat...']}"
+            class="bg-blue-200 p-5 m-5 rounded-xl"
+          >
+            <h3
+              class="text-xl tracking-widest border-b-2 border-b-blue-500 mb-5"
+            >
+              Latest Posts
+            </h3>
+            <template x-for="(title, index) in titles" :key="index">
+              <a href="v_single_page.html">
+                <div class="flex bg-white mb-3">
+                  <img
+                    src="./assets/images/blogs/1.jpg"
+                    class="box-border h-32 w-32 bg-no-repeat bg-cover bg-center"
+                  />
+                  <div class="flex flex-col ml-3">
+                    <h3 x-text="title" class="font-bold"></h3>
+                    <div>Some description text...</div>
+                  </div>
+                </div>
+              </a>
+            </template>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Content Section end -->
+  </body>
+</html>
