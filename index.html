@@ -16,6 +16,7 @@
     <!-- Header/Navigation start -->
     <nav
       x-data="{isOpen: false, navItems:['Home','News','Galleries']}"
+      @keydown.escape="isOpen = false"
       class="flex fixed top-0 items-center justify-between flex-wrap backdrop-blur-md bg-violet-500/30 shadow-lg py-2 px-3 lg:py-4 lg:px-8 w-full z-50"
     >
       <div class="flex items-center">
