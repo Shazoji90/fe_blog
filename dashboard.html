@@ -9,23 +9,31 @@
       rel="stylesheet"
       href="https://fonts.googleapis.com/icon?family=Material+Icons"
     />
+    <link rel="stylesheet" href="./assets/css/styles.css" />
+
     <script src="https://cdn.tailwindcss.com"></script>
     <script
       defer
       src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
     ></script>
-    <link rel="stylesheet" href="./assets/css/styles.css" />
+    <script src="./assets/js/functions.js"></script>
   </head>
-  <body x-data="{isShow: false}" @keydown.escape="isShow = false">
+  <body
+    x-data="{atTop: true, isShow: false}"
+    @scroll.window="atTop = (window.pageYOffset > 100) ? false : true; "
+    @keydown.escape="isShow = false"
+    class="min-h-screen"
+  >
     <!-- Header/Navigation start -->
     <nav
       x-data="{isOpen: false, navItems:['Home','News','Galleries']}"
       @keydown.escape="isOpen = false"
-      class="flex fixed top-0 items-center justify-between flex-wrap backdrop-blur-md bg-violet-500/30 shadow-lg py-2 px-3 lg:py-4 lg:px-8 w-full z-10"
+      :class="{ 'backdrop-blur-md bg-violet-500/30 shadow-lg': !atTop }"
+      class="flex fixed top-0 items-center justify-between flex-wrap py-2 px-3 lg:py-4 lg:px-8 w-full z-10"
     >
       <div class="flex items-center">
         <h3
-          class="text-2xl font-medium text-transparent bg-clip-text bg-gradient-to-r from-violet-500 to-pink-500 cursor-pointer"
+          class="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-violet-500 to-pink-500 cursor-pointer animate-pulse"
         >
           myBlog
         </h3>
@@ -160,10 +168,10 @@
     <!-- Popup Modal start -->
     <div
       x-show="isShow"
-      x-transition:enter="transition transform duration-300"
+      x-transition:enter="transition transform duration-100"
       x-transition:enter-start="opacity-0 scale-90"
       x-transition:enter-end="opacity-100 scale-100"
-      x-transition:leave="transition transform duration-300"
+      x-transition:leave="transition transform duration-100"
       x-transition:leave-start="opacity-100 scale-100"
       x-transition:leave-end="opacity-0 scale-90"
       tabindex="-1"
@@ -179,9 +187,7 @@
           class="relative bg-white rounded-xl drop-shadow-lg items-center justify-center h-auto w-auto lg:w-3/4 m-auto mx-5 lg:mx-auto"
         >
           <div class="flex items-start justify-between p-4 border-b rounded-t">
-            <h3 class="text-xl font-semibold text-gray-900">
-              Form Input New Data
-            </h3>
+            <h3 class="text-xl font-semibold text-gray-900">Create New Post</h3>
             <button
               type="button"
               @click="isShow = !isShow"
@@ -206,7 +212,7 @@
           <div class="mx-5 mb-5 pt-5">
             <input
               type="text"
-              class="block py-2 px-3 w-full rounded-md ring-1 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+              class="w-full rounded-md border border-slate-200 bg-white py-3 px-6 outline-none focus:border-purple-500 focus:shadow-md transition-all duration-300"
               name=""
               placeholder=" Type anything for your Title here..."
             />
@@ -226,13 +232,93 @@
               name=""
             />
           </div>
-          <div class="flex mb-3 px-5 w-full">
-            <textarea
-              class="ring-1 w-full rounded-md"
-              name=""
-              id=""
-              rows="10"
-            ></textarea>
+          <!-- <div class="flex mb-3 px-5 w-full"> -->
+          <div
+            class="w-full max-w-6xl mx-auto bg-white px-5 pb-5 text-black"
+            x-data="app()"
+            x-init="init($refs.wysiwyg)"
+          >
+            <div class="border border-gray-200 overflow-hidden rounded-md">
+              <div
+                class="w-full flex border-b border-gray-200 text-xl text-gray-600"
+              >
+                <button
+                  class="outline-none focus:outline-none border-r border-gray-200 w-10 h-10 hover:text-indigo-500 active:bg-gray-50"
+                  @click="format('bold')"
+                >
+                  <i class="mdi mdi-format-bold"></i>
+                </button>
+                <button
+                  class="outline-none focus:outline-none border-r border-gray-200 w-10 h-10 hover:text-indigo-500 active:bg-gray-50"
+                  @click="format('italic')"
+                >
+                  <i class="mdi mdi-format-italic"></i>
+                </button>
+                <button
+                  class="outline-none focus:outline-none border-r border-gray-200 w-10 h-10 mr-1 hover:text-indigo-500 active:bg-gray-50"
+                  @click="format('underline')"
+                >
+                  <i class="mdi mdi-format-underline"></i>
+                </button>
+                <button
+                  class="outline-none focus:outline-none border-l border-r border-gray-200 w-10 h-10 hover:text-indigo-500 active:bg-gray-50"
+                  @click="format('formatBlock','P')"
+                >
+                  <i class="mdi mdi-format-paragraph"></i>
+                </button>
+                <button
+                  class="outline-none focus:outline-none border-r border-gray-200 w-10 h-10 hover:text-indigo-500 active:bg-gray-50"
+                  @click="format('formatBlock','H1')"
+                >
+                  <i class="mdi mdi-format-header-1"></i>
+                </button>
+                <button
+                  class="outline-none focus:outline-none border-r border-gray-200 w-10 h-10 hover:text-indigo-500 active:bg-gray-50"
+                  @click="format('formatBlock','H2')"
+                >
+                  <i class="mdi mdi-format-header-2"></i>
+                </button>
+                <button
+                  class="outline-none focus:outline-none border-r border-gray-200 w-10 h-10 mr-1 hover:text-indigo-500 active:bg-gray-50"
+                  @click="format('formatBlock','H3')"
+                >
+                  <i class="mdi mdi-format-header-3"></i>
+                </button>
+                <button
+                  class="outline-none focus:outline-none border-l border-r border-gray-200 w-10 h-10 hover:text-indigo-500 active:bg-gray-50"
+                  @click="format('insertUnorderedList')"
+                >
+                  <i class="mdi mdi-format-list-bulleted"></i>
+                </button>
+                <button
+                  class="outline-none focus:outline-none border-r border-gray-200 w-10 h-10 mr-1 hover:text-indigo-500 active:bg-gray-50"
+                  @click="format('insertOrderedList')"
+                >
+                  <i class="mdi mdi-format-list-numbered"></i>
+                </button>
+                <button
+                  class="outline-none focus:outline-none border-l border-r border-gray-200 w-10 h-10 hover:text-indigo-500 active:bg-gray-50"
+                  @click="format('justifyLeft')"
+                >
+                  <i class="mdi mdi-format-align-left"></i>
+                </button>
+                <button
+                  class="outline-none focus:outline-none border-r border-gray-200 w-10 h-10 hover:text-indigo-500 active:bg-gray-50"
+                  @click="format('justifyCenter')"
+                >
+                  <i class="mdi mdi-format-align-center"></i>
+                </button>
+                <button
+                  class="outline-none focus:outline-none border-r border-gray-200 w-10 h-10 hover:text-indigo-500 active:bg-gray-50"
+                  @click="format('justifyRight')"
+                >
+                  <i class="mdi mdi-format-align-right"></i>
+                </button>
+              </div>
+              <div class="w-full">
+                <iframe x-ref="wysiwyg" class="w-full overflow-y-auto"></iframe>
+              </div>
+            </div>
           </div>
           <!-- Modal Footer -->
           <div
