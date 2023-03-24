@@ -22,6 +22,7 @@
     x-data="{atTop: true, isShow: false}"
     @scroll.window="atTop = (window.pageYOffset > 100) ? false : true; "
     @keydown.escape="isShow = false"
+    :class="{ 'overflow-hidden': isShow }"
     class="min-h-screen"
   >
     <!-- Header/Navigation start -->
